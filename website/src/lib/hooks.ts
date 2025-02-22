@@ -1,4 +1,4 @@
-import type { Sketch } from './';
+import type { Sketch } from '.';
 
 export function useProjects() {
   const sketches: Sketch[] = [];
