@@ -4,11 +4,11 @@
 	import { page } from '$app/stores';
 
 	// Import utility functions and hooks
-	import { type Project, getEmoji, updateURL, filterProjects } from '../lib';
+	import { type Sketch, getEmoji, updateURL, filterProjects } from '../lib';
 	import { useProjects, useDarkMode, useURLParams } from '../lib/hooks';
 
-	let projects: Project[] = [];
-	let allProjects: Project[] = [];
+	let sketches: Sketch[] = [];
+	let allProjects: Sketch[] = [];
 	let loading: boolean = true;
 	let error: string | null = null;
 
@@ -42,7 +42,7 @@
 	}
 
 	function applyFilters(): void {
-		projects = filterProjects(allProjects, selectedCategory, searchQuery, sortOrder);
+		sketches = filterProjects(allProjects, selectedCategory, searchQuery, sortOrder);
 	}
 
 	function resetFilters(): void {
@@ -203,7 +203,7 @@
 								</span>
 							{/if}
 							<span class="ml-2 text-sm font-normal text-neutral-500 dark:text-neutral-400">
-								({projects.length} projects)
+								({sketches.length} sketches)
 							</span>
 						</h2>
 						{#if loading}
@@ -211,16 +211,16 @@
 								<div
 									class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-neutral-800 dark:border-neutral-200"
 								></div>
-								<p class="mt-4 text-neutral-600 dark:text-neutral-400">Loading projects...</p>
+								<p class="mt-4 text-neutral-600 dark:text-neutral-400">Loading sketches...</p>
 							</div>
 						{:else if error}
 							<div class="py-8 text-center text-red-500 dark:text-red-400">
 								<p>Error: {error}</p>
 								<p class="mt-2 text-sm">
-									Please make sure your projects.json file is in the public folder
+									Please make sure your sketches.json file is in the public folder
 								</p>
 							</div>
-						{:else if projects.length === 0}
+						{:else if sketches.length === 0}
 							<div class="cursor-pointer px-4 py-12 text-center">
 								<svg
 									class="mx-auto mb-4 h-12 w-12 text-neutral-400 dark:text-neutral-600"
@@ -237,15 +237,15 @@
 									/>
 								</svg>
 								<h3 class="mb-1 text-lg font-medium text-neutral-700 dark:text-neutral-300">
-									No projects found
+									No sketches found
 								</h3>
 								<p class="mb-4 text-neutral-500 dark:text-neutral-400">
 									{#if selectedCategory}
-										No projects in the "{selectedCategory}" category
+										No sketches in the "{selectedCategory}" category
 									{:else if searchQuery.trim() !== ''}
-										No projects match your search for "{searchQuery}"
+										No sketches match your search for "{searchQuery}"
 									{:else}
-										No projects have been added yet
+										No sketches have been added yet
 									{/if}
 								</p>
 								{#if selectedCategory || searchQuery.trim() !== ''}
@@ -259,7 +259,7 @@
 							</div>
 						{:else}
 							<ul class="space-y-4">
-								{#each projects as project (project.id)}
+								{#each sketches as project (project.id)}
 									<li
 										in:fly={{ y: 20, duration: 300 }}
 										out:fade

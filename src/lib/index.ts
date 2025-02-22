@@ -1,6 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
 
-export interface Project {
+export interface Sketch {
     id: string | number;
     name: string;
     notes: string;
@@ -45,9 +45,9 @@ export function updateURL(selectedCategory: string | null): void {
 }
 
 export function sortProjects(
-    projects: Project[], 
+    projects: Sketch[], 
     sortOrder: 'oldest' | 'newest'
-): Project[] {
+): Sketch[] {
     return [...projects].sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
@@ -58,11 +58,11 @@ export function sortProjects(
 }
 
 export function filterProjects(
-    allProjects: Project[],
+    allProjects: Sketch[],
     selectedCategory: string | null,
     searchQuery: string,
     sortOrder: 'oldest' | 'newest'
-): Project[] {
+): Sketch[] {
     let filtered = [...allProjects];
 
     if (selectedCategory) {
