@@ -2,6 +2,8 @@
 
 This repository serves as a collection of my sketches, and explorations across various technical domains. You can find these materials on the accompanying [website](https://sketchbook.cihat.dev/). 
 
+![Sketchbook](assets/sketchbook.png)
+
 <!-- ## Resources
 [My Bookmarks](https://cihat.dev/bookmarks) |
 [Roadmap](https://roadmap.sh/) | 

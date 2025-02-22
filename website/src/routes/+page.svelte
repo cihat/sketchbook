@@ -1,16 +1,24 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { page } from '$app/stores';
+	import TimeFilter from '../components/TimeFilter.svelte';
 
-	// Import utility functions and hooks
-	import { type Sketch, getEmoji, updateURL, filterProjects } from '../lib';
+	import {
+		type Sketch,
+		type TimePeriod,
+		getEmoji,
+		updateURL,
+		filterProjects,
+		groupByWeek
+	} from '../lib';
 	import { useProjects, useDarkMode, useURLParams } from '../lib/hooks';
 
 	let sketches: Sketch[] = [];
 	let allProjects: Sketch[] = [];
 	let loading: boolean = true;
 	let error: string | null = null;
+	let groupedSketches: Record<string, Sketch[]> = {};
+	let selectedTimePeriod: TimePeriod | null = null;
 
 	let isDarkMode: boolean = false;
 
@@ -21,11 +29,43 @@
 
 	let sortOrder: 'oldest' | 'newest' = 'oldest';
 
-	// Setup hooks
 	const { loadProjects } = useProjects();
 	const { setupDarkMode } = useDarkMode();
 	const { getURLCategory } = useURLParams();
 
+	const timePeriods: { value: TimePeriod; label: string }[] = [
+		{ value: 'this-week', label: 'This Week' },
+		{ value: 'last-week', label: 'Last Week' },
+		{ value: 'next-week', label: 'Next Week' },
+		{ value: 'last-month', label: 'Last Month' },
+		{ value: 'last-2-months', label: 'Last 2 Months' },
+		{ value: 'last-3-months', label: 'Last 3 Months' },
+		{ value: 'last-6-months', label: 'Last 6 Months' }
+	];
+
+	function applyFilters(): void {
+		const filtered = filterProjects(
+			allProjects,
+			selectedCategory,
+			searchQuery,
+			sortOrder,
+			selectedTimePeriod
+		);
+		groupedSketches = groupByWeek(filtered);
+	}
+
+	function resetFilters(): void {
+		selectedCategory = null;
+		searchQuery = '';
+		selectedTimePeriod = null;
+		updateURL(selectedCategory);
+		applyFilters();
+	}
+
+	function handleTimePeriodChange(period: TimePeriod | null): void {
+		selectedTimePeriod = period;
+		applyFilters();
+	}
 	function filterByCategory(category: string): void {
 		selectedCategory = category;
 		updateURL(selectedCategory);
@@ -38,17 +78,6 @@
 
 	function toggleSortOrder(): void {
 		sortOrder = sortOrder === 'oldest' ? 'newest' : 'oldest';
-		applyFilters();
-	}
-
-	function applyFilters(): void {
-		sketches = filterProjects(allProjects, selectedCategory, searchQuery, sortOrder);
-	}
-
-	function resetFilters(): void {
-		selectedCategory = null;
-		searchQuery = '';
-		updateURL(selectedCategory);
 		applyFilters();
 	}
 
@@ -113,7 +142,7 @@
 							bind:value={searchQuery}
 							on:input={handleSearch}
 							placeholder="Search sketch..."
-							class="w-full rounded-lg border border-neutral-300 bg-white py-2 pr-4 pl-10 focus:ring-2 focus:ring-neutral-500 dark:border-neutral-700 dark:bg-neutral-900 dark:focus:ring-neutral-400"
+							class="w-full rounded-lg border border-neutral-300 bg-white py-2 pl-10 pr-4 focus:ring-2 focus:ring-neutral-500 dark:border-neutral-700 dark:bg-neutral-900 dark:focus:ring-neutral-400"
 						/>
 					</div>
 					<button
@@ -155,6 +184,9 @@
 							<span class="text-sm">Newest First</span>
 						{/if}
 					</button>
+				</div>
+				<div class="mb-3">
+					<TimeFilter selectedPeriod={selectedTimePeriod} onPeriodChange={handleTimePeriodChange} />
 				</div>
 				<div
 					class="mb-6 rounded-xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900"
@@ -203,7 +235,7 @@
 								</span>
 							{/if}
 							<span class="ml-2 text-sm font-normal text-neutral-500 dark:text-neutral-400">
-								({sketches.length} sketches)
+								({Object.values(groupedSketches).flat().length} sketches)
 							</span>
 						</h2>
 						{#if loading}
@@ -220,7 +252,7 @@
 									Please make sure your sketches.json file is in the public folder
 								</p>
 							</div>
-						{:else if sketches.length === 0}
+						{:else if Object.keys(groupedSketches).length === 0}
 							<div class="cursor-pointer px-4 py-12 text-center">
 								<svg
 									class="mx-auto mb-4 h-12 w-12 text-neutral-400 dark:text-neutral-600"
@@ -258,74 +290,86 @@
 								{/if}
 							</div>
 						{:else}
-							<ul class="space-y-4">
-								{#each sketches as project (project.id)}
-									<li
-										in:fly={{ y: 20, duration: 300 }}
-										out:fade
-										class="relative rounded-lg border border-neutral-200 p-4 transition-colors hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800/50"
-									>
-										<div class="absolute top-3 right-4">
-											<span
-												class="inline-flex items-center rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
-											>
-												{getEmoji(project.category)}
-												{project.category}
+							<div class="space-y-8">
+								{#each Object.entries(groupedSketches) as [weekKey, weekSketches] (weekKey)}
+									<div class="mb-6">
+										<h3 class="mb-4 text-lg font-medium text-neutral-700 dark:text-neutral-300">
+											{weekKey}
+											<span class="ml-2 text-sm font-normal text-neutral-500">
+												({weekSketches.length} sketches)
 											</span>
-										</div>
-
-										<div class="flex items-start pr-28">
-											<div class="flex-1">
-												{#if project.link && project.completed}
-													<a
-														href={project.link}
-														target="_blank"
-														rel="noopener noreferrer"
-														class="font-medium text-neutral-900 hover:underline dark:text-neutral-50 {project.completed
-															? 'line-through opacity-60'
-															: ''}"
-													>
-														{project.name}
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															class="ml-1 inline-block h-4 w-4 opacity-70"
-															viewBox="0 0 20 20"
-															fill="currentColor"
+										</h3>
+										<ul class="space-y-4">
+											{#each weekSketches as project (project.id)}
+												<li
+													in:fly={{ y: 20, duration: 300 }}
+													out:fade
+													class="relative rounded-lg border border-neutral-200 p-4 transition-colors hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800/50"
+												>
+													<div class="absolute right-4 top-3">
+														<span
+															class="inline-flex items-center rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
 														>
-															<path
-																d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
-															/>
-															<path
-																d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"
-															/>
-														</svg>
-													</a>
-												{:else}
-													<h3
-														class="font-medium text-neutral-900 dark:text-neutral-50 {project.completed
-															? 'line-through opacity-60'
-															: ''}"
-													>
-														{project.name}
-													</h3>
-												{/if}
-												{#if project.notes}
-													<p
-														class="mt-1 text-sm text-neutral-500 dark:text-neutral-400 {project.completed
-															? 'opacity-60'
-															: ''}"
-													>
-														{project.notes}
-													</p>
-												{/if}
-												<div class="mt-2 text-xs text-neutral-400 dark:text-neutral-500">
-													Added: {new Date(project.date).toLocaleDateString()}
-												</div>
-											</div>
-										</div>
-									</li>
+															{getEmoji(project.category)}
+															{project.category}
+														</span>
+													</div>
+
+													<div class="flex items-start pr-28">
+														<div class="flex-1">
+															{#if project.link && project.completed}
+																<a
+																	href={project.link}
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	class="font-medium text-neutral-900 hover:underline dark:text-neutral-50 {project.completed
+																		? 'line-through opacity-60'
+																		: ''}"
+																>
+																	{project.name}
+																	<svg
+																		xmlns="http://www.w3.org/2000/svg"
+																		class="ml-1 inline-block h-4 w-4 opacity-70"
+																		viewBox="0 0 20 20"
+																		fill="currentColor"
+																	>
+																		<path
+																			d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
+																		/>
+																		<path
+																			d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"
+																		/>
+																	</svg>
+																</a>
+															{:else}
+																<h3
+																	class="font-medium text-neutral-900 dark:text-neutral-50 {project.completed
+																		? 'line-through opacity-60'
+																		: ''}"
+																>
+																	{project.name}
+																</h3>
+															{/if}
+															{#if project.notes}
+																<p
+																	class="mt-1 text-sm text-neutral-500 dark:text-neutral-400 {project.completed
+																		? 'opacity-60'
+																		: ''}"
+																>
+																	{project.notes}
+																</p>
+															{/if}
+															<div class="mt-2 text-xs text-neutral-400 dark:text-neutral-500">
+																Added: {new Date(project.date).toLocaleDateString()}
+															</div>
+														</div>
+													</div>
+												</li>
+											{/each}
+										</ul>
+									</div>
 								{/each}
-							</ul>
+							</div>
 						{/if}
 					</div>
 				</div>
@@ -351,6 +395,5 @@
 			Roboto,
 			system-ui,
 			sans-serif;
-		/* -webkit-font-smoothing: antialiased; */
 	}
 </style>
