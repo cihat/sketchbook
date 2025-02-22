@@ -276,7 +276,7 @@
 
 										<div class="flex items-start pr-28">
 											<div class="flex-1">
-												{#if project.link}
+												{#if project.link && project.completed}
 													<a
 														href={project.link}
 														target="_blank"
@@ -340,8 +340,17 @@
 <style>
 	:global(html) {
 		font-family:
-			-apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Text', 'SF Pro', 'Segoe UI', Roboto,
-			system-ui, sans-serif;
-		-webkit-font-smoothing: antialiased;
+			'Inter',
+			sans-serif,
+			-apple-system,
+			BlinkMacSystemFont,
+			'Inter',
+			'SF Pro Text',
+			'SF Pro',
+			'Segoe UI',
+			Roboto,
+			system-ui,
+			sans-serif;
+		/* -webkit-font-smoothing: antialiased; */
 	}
 </style>
