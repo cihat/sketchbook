@@ -3,15 +3,9 @@
 	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 
-	interface Project {
-		id: string | number;
-		name: string;
-		notes: string;
-		category: string;
-		date: string;
-		link?: string;
-		completed?: boolean;
-	}
+	// Import utility functions and hooks
+	import { type Project, getEmoji, updateURL, filterProjects } from '../lib';
+	import { useProjects, useDarkMode, useURLParams } from '../lib/hooks';
 
 	let projects: Project[] = [];
 	let allProjects: Project[] = [];
@@ -27,31 +21,14 @@
 
 	let sortOrder: 'oldest' | 'newest' = 'oldest';
 
-	const categoryEmojis: Record<string, string> = {
-		'Design Pattern': '🏛️',
-		Approach: '🧠',
-		'Solution Technique': '🛠️',
-		'Code Challenge': '🏆',
-		'Performance Optimization': '⚡',
-		Principles: '📐',
-		Sketch: '✏️',
-		Web: '🌐',
-		Game: '🎮',
-		Mobile: '📱',
-		'Programming Language': '💻',
-		Blog: '📝',
-		Training: '🏋️',
-		Examples: '📋',
-		'Computer Science': '🔬'
-	};
-
-	function getEmoji(category: string): string {
-		return categoryEmojis[category] || '🔍';
-	}
+	// Setup hooks
+	const { loadProjects } = useProjects();
+	const { setupDarkMode } = useDarkMode();
+	const { getURLCategory } = useURLParams();
 
 	function filterByCategory(category: string): void {
 		selectedCategory = category;
-		updateURL();
+		updateURL(selectedCategory);
 		applyFilters();
 	}
 
@@ -64,101 +41,33 @@
 		applyFilters();
 	}
 
-	function updateURL(): void {
-		if (selectedCategory) {
-			const url = new URL(window.location.href);
-			url.searchParams.set('category', selectedCategory);
-			window.history.pushState({}, '', url);
-		} else {
-			const url = new URL(window.location.href);
-			url.searchParams.delete('category');
-			window.history.pushState({}, '', url);
-		}
-	}
-
 	function applyFilters(): void {
-		let filtered = [...allProjects];
-
-		if (selectedCategory) {
-			filtered = filtered.filter((project) => project.category === selectedCategory);
-		}
-
-		if (searchQuery.trim() !== '') {
-			const query = searchQuery.toLowerCase();
-			filtered = filtered.filter(
-				(project) =>
-					project.name.toLowerCase().includes(query) ||
-					project.notes.toLowerCase().includes(query) ||
-					project.category.toLowerCase().includes(query)
-			);
-		}
-
-		filtered = filtered.sort((a, b) => {
-			const dateA = new Date(a.date);
-			const dateB = new Date(b.date);
-			return sortOrder === 'oldest'
-				? dateA.getTime() - dateB.getTime()
-				: dateB.getTime() - dateA.getTime();
-		});
-
-		projects = filtered;
+		projects = filterProjects(allProjects, selectedCategory, searchQuery, sortOrder);
 	}
 
 	function resetFilters(): void {
 		selectedCategory = null;
 		searchQuery = '';
-		updateURL();
+		updateURL(selectedCategory);
 		applyFilters();
 	}
 
 	onMount(async () => {
-		try {
-			const response = await fetch('/projects.json');
-			if (!response.ok) {
-				throw new Error('Failed to load projects data');
-			}
-			const data = await response.json();
+		const projectsData = await loadProjects();
 
-			allProjects = data;
+		if (projectsData.error) {
+			error = projectsData.error;
+		} else {
+			allProjects = projectsData.allProjects ?? [];
+			categories = projectsData.categories ?? [];
 
-			const categorySet = new Set(data.map((project: Project) => project.category));
-			categories = Array.from(categorySet) as string[];
-
-			const urlParams = new URLSearchParams(window.location.search);
-			const categoryParam = urlParams.get('category');
-
-			if (categoryParam && categories.includes(categoryParam)) {
-				selectedCategory = categoryParam;
-			}
+			selectedCategory = getURLCategory(categories);
 
 			applyFilters();
-
-			loading = false;
-		} catch (err) {
-			console.error('Error loading projects:', err);
-			error = err instanceof Error ? err.message : 'Unknown error';
-			loading = false;
 		}
 
-		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-		if (prefersDark) {
-			document.documentElement.classList.add('dark');
-			isDarkMode = true;
-		} else {
-			document.documentElement.classList.remove('dark');
-			isDarkMode = false;
-		}
-
-		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-			if (event.matches) {
-				document.documentElement.classList.add('dark');
-				isDarkMode = true;
-			} else {
-				document.documentElement.classList.remove('dark');
-				isDarkMode = false;
-			}
-		});
+		loading = false;
+		isDarkMode = setupDarkMode();
 	});
 </script>
 
@@ -181,7 +90,9 @@
 			<div class="w-full md:sticky md:top-6 md:w-1/3 md:self-start">
 				<div class="mb-6">
 					<div class="relative mb-3 w-full">
-						<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+						<div
+							class="pointer-events-none absolute inset-y-0 left-0 flex cursor-pointer items-center pl-3"
+						>
 							<svg
 								class="h-4 w-4 text-neutral-500 dark:text-neutral-400"
 								xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +118,7 @@
 					</div>
 					<button
 						on:click={toggleSortOrder}
-						class="flex w-full items-center justify-center rounded-lg border border-neutral-300 bg-white px-4 py-2 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+						class="flex w-full cursor-pointer items-center justify-center rounded-lg border border-neutral-300 bg-white px-4 py-2 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800"
 						title="Toggle sort order"
 					>
 						{#if sortOrder === 'oldest'}
@@ -262,7 +173,7 @@
 
 						{#each categories as category}
 							<button
-								class="rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors
+								class="cursor-pointer rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors
                 {selectedCategory === category
 									? 'bg-neutral-900 text-white dark:bg-neutral-50 dark:text-neutral-900'
 									: 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700'}"
@@ -310,7 +221,7 @@
 								</p>
 							</div>
 						{:else if projects.length === 0}
-							<div class="px-4 py-12 text-center">
+							<div class="cursor-pointer px-4 py-12 text-center">
 								<svg
 									class="mx-auto mb-4 h-12 w-12 text-neutral-400 dark:text-neutral-600"
 									xmlns="http://www.w3.org/2000/svg"

@@ -1,25 +1,25 @@
 [
-  { 
-    "id": 1, 
-    "name": "Observer Pattern Implementation", 
+  {
+    "id": 1,
+    "name": "Observer Pattern Implementation for TEST",
     "notes": "Event-driven architecture using Observer pattern for state management",
     "link": "https://github.com/username/observer-pattern",
     "category": "Design Pattern",
     "completed": true,
     "date": "2023-02-15"
   },
-  { 
-    "id": 2, 
-    "name": "Domain-Driven Design", 
+  {
+    "id": 2,
+    "name": "Domain-Driven Design for TEST",
     "notes": "Implementing DDD principles in a microservice architecture",
-    "link": "https://github.com/username/ddd-approach",
+    "link": "",
     "category": "Approach",
     "completed": false,
     "date": "2023-04-22"
   },
-  { 
-    "id": 3, 
-    "name": "JWT Authentication", 
+  {
+    "id": 3,
+    "name": "JWT Authentication for TEST",
     "notes": "Token-based authentication using JSON Web Tokens",
     "link": "https://github.com/username/jwt-auth",
     "category": "Solution Technique",
@@ -28,7 +28,7 @@
   },
   {
     "id": 4,
-    "name": "Binary Tree Traversal",
+    "name": "Binary Tree Traversal for TEST",
     "notes": "Solutions for in-order, pre-order, and post-order tree traversal algorithms",
     "link": "https://github.com/username/tree-traversal",
     "category": "Code Challenge",
@@ -37,16 +37,16 @@
   },
   {
     "id": 5,
-    "name": "React Rendering Optimization",
+    "name": "React Rendering Optimization for TEST",
     "notes": "Techniques for preventing unnecessary re-renders in React applications",
-    "link": "https://github.com/username/react-optimization",
+    "link": "",
     "category": "Performance Optimization",
     "completed": false,
     "date": "2023-07-30"
   },
   {
     "id": 6,
-    "name": "SOLID Principles Examples",
+    "name": "SOLID Principles Examples for TEST",
     "notes": "Code examples demonstrating each of the SOLID principles",
     "link": "https://github.com/username/solid-principles",
     "category": "Principles",
@@ -55,7 +55,7 @@
   },
   {
     "id": 7,
-    "name": "UI Component Prototypes",
+    "name": "UI Component Prototypes for TEST",
     "notes": "Sketches and wireframes for a design system",
     "link": "",
     "category": "Sketch",
@@ -64,7 +64,7 @@
   },
   {
     "id": 8,
-    "name": "Responsive Grid System",
+    "name": "Responsive Grid System for TEST",
     "notes": "CSS grid implementation with responsive breakpoints",
     "link": "https://github.com/username/grid-system",
     "category": "Web",
@@ -73,7 +73,7 @@
   },
   {
     "id": 9,
-    "name": "2D Platformer Physics",
+    "name": "2D Platformer Physics for TEST",
     "notes": "Implementation of jump, gravity and collision detection for platformer games",
     "link": "https://github.com/username/platformer-physics",
     "category": "Game",
@@ -82,7 +82,7 @@
   },
   {
     "id": 10,
-    "name": "Push Notification Service",
+    "name": "Push Notification Service for TEST",
     "notes": "Cross-platform push notification implementation for mobile apps",
     "link": "https://github.com/username/push-notifications",
     "category": "Mobile",
@@ -91,7 +91,7 @@
   },
   {
     "id": 11,
-    "name": "Rust Memory Management",
+    "name": "Rust Memory Management for TEST",
     "notes": "Learning Rust's ownership model and memory management principles",
     "link": "https://github.com/username/rust-memory",
     "category": "Programming Language",
@@ -100,7 +100,7 @@
   },
   {
     "id": 12,
-    "name": "Tech Architecture Patterns",
+    "name": "Tech Architecture Patterns for TEST",
     "notes": "A series of articles on common software architecture patterns",
     "link": "https://medium.com/@username/architecture-patterns",
     "category": "Blog",
@@ -109,7 +109,7 @@
   },
   {
     "id": 13,
-    "name": "TypeScript Advanced Types",
+    "name": "TypeScript Advanced Types for TEST",
     "notes": "Learning exercises for advanced TypeScript type features",
     "link": "https://github.com/username/ts-advanced",
     "category": "Training",
@@ -118,7 +118,7 @@
   },
   {
     "id": 14,
-    "name": "API Integration Patterns",
+    "name": "API Integration Patterns for TEST",
     "notes": "Examples of different API integration patterns and best practices",
     "link": "https://github.com/username/api-patterns",
     "category": "Examples",
@@ -127,7 +127,7 @@
   },
   {
     "id": 15,
-    "name": "Algorithm Complexity Analysis",
+    "name": "Algorithm Complexity Analysis for TEST",
     "notes": "Study of time and space complexity for common algorithms",
     "link": "https://github.com/username/algo-complexity",
     "category": "Computer Science",
@@ -136,7 +136,7 @@
   },
   {
     "id": 16,
-    "name": "Data Structures Implementation",
+    "name": "Data Structures Implementation for TEST",
     "notes": "Custom implementations of common data structures in JavaScript",
     "link": "https://github.com/username/data-structures",
     "category": "Computer Science",
@@ -145,7 +145,7 @@
   },
   {
     "id": 17,
-    "name": "Compiler Theory Basics",
+    "name": "Compiler Theory Basics for TEST",
     "notes": "Building a simple lexer and parser for a custom language",
     "link": "https://github.com/username/mini-compiler",
     "category": "Computer Science",
