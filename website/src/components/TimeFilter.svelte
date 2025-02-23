@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { TimePeriod } from '../lib';
+  import { fly } from 'svelte/transition';
+  import { selectedTimePeriod } from '../stores/sketch';
 
-  import { fade, fly } from 'svelte/transition';
+  function onPeriodChange(period: TimePeriod | null): void {
+    $selectedTimePeriod = period;
+  }
 
-  export let selectedPeriod: TimePeriod | null = null;
-  export let onPeriodChange: (period: TimePeriod | null) => void;
+  console.log('selectedTimePeriod >>', $selectedTimePeriod);
 
   let isOpen = false;
 
@@ -40,12 +43,12 @@
 <div class="dropdown relative w-full">
   <button
     on:click={toggleDropdown}
-    class="w-full cursor-pointer rounded-lg border border-neutral-300 bg-white px-4 py-2 text-left text-sm font-medium transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+    class="w-full cursor-pointer rounded-lg border mb-3 border-neutral-300 bg-white px-4 py-2 text-left text-sm font-medium transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800"
   >
     <div class="flex items-center justify-between">
       <span>
-        {selectedPeriod
-          ? timePeriods.find((p) => p.value === selectedPeriod)?.label
+        {$selectedTimePeriod
+          ? timePeriods.find((p) => p.value === $selectedTimePeriod)?.label
           : 'Filter by Time'}
       </span>
       <svg
@@ -70,7 +73,7 @@
         on:click={() => handleSelect(null)}
       >
         <span class="flex-grow">All Time</span>
-        {#if !selectedPeriod}
+        {#if !selectedTimePeriod}
           <svg
             class="h-4 w-4"
             xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +97,7 @@
           on:click={() => handleSelect(period.value)}
         >
           <span class="flex-grow">{period.label}</span>
-          {#if selectedPeriod === period.value}
+          {#if $selectedTimePeriod === period.value}
             <svg
               class="h-4 w-4"
               xmlns="http://www.w3.org/2000/svg"

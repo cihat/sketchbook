@@ -8,7 +8,7 @@ export interface Sketch {
   completed?: boolean;
 }
 
-export const categoryEmojis: Record<string, string> = {
+const categoryEmojis: Record<string, string> = {
   'Design Pattern': '🏛️',
   Approach: '🧠',
   'Solution Technique': '🛠️',
@@ -30,7 +30,7 @@ export function getEmoji(category: string): string {
   return categoryEmojis[category] || '🔍';
 }
 
-export function getWeekNumber(date: Date): string {
+function getWeekNumber(date: Date): string {
   const startOfYear = new Date(date.getFullYear(), 0, 1);
   const days = Math.floor((date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
   const weekNumber = Math.ceil((days + startOfYear.getDay() + 1) / 7);
@@ -61,11 +61,11 @@ export function updateURL(selectedCategory: string | null): void {
   }
 }
 
-export function sortProjects(
-  projects: Sketch[],
+function sortSketches(
+  sketches: Sketch[],
   sortOrder: 'oldest' | 'newest'
 ): Sketch[] {
-  return [...projects].sort((a, b) => {
+  return [...sketches].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return sortOrder === 'oldest'
@@ -133,44 +133,44 @@ function isWithinPeriod(date: Date, period: TimePeriod): boolean {
   }
 }
 
-export function filterProjectsByTimePeriod(
-  projects: Sketch[],
+function filterSketchesByTimePeriod(
+  sketches: Sketch[],
   period: TimePeriod | null
 ): Sketch[] {
-  if (!period) return projects;
+  if (!period) return sketches;
 
-  return projects.filter(project => {
-    const projectDate = new Date(project.date);
-    return isWithinPeriod(projectDate, period);
+  return sketches.filter(sketch => {
+    const sketchDate = new Date(sketch.date);
+    return isWithinPeriod(sketchDate, period);
   });
 }
 
-export function filterProjects(
-  allProjects: Sketch[],
+export function filterSketches(
+  allSketches: Sketch[],
   selectedCategory: string | null,
   searchQuery: string,
   sortOrder: 'oldest' | 'newest',
   timePeriod: TimePeriod | null
 ): Sketch[] {
-  let filtered = [...allProjects];
+  let filtered = [...allSketches];
 
   if (timePeriod) {
-    filtered = filterProjectsByTimePeriod(filtered, timePeriod);
+    filtered = filterSketchesByTimePeriod(filtered, timePeriod);
   }
 
   if (selectedCategory) {
-    filtered = filtered.filter((project) => project.category === selectedCategory);
+    filtered = filtered.filter((sketch) => sketch.category === selectedCategory);
   }
 
   if (searchQuery.trim() !== '') {
     const query = searchQuery.toLowerCase();
     filtered = filtered.filter(
-      (project) =>
-        project.name.toLowerCase().includes(query) ||
-        project.notes.toLowerCase().includes(query) ||
-        project.category.toLowerCase().includes(query)
+      (sketch) =>
+        sketch.name.toLowerCase().includes(query) ||
+        sketch.notes.toLowerCase().includes(query) ||
+        sketch.category.toLowerCase().includes(query)
     );
   }
 
-  return sortProjects(filtered, sortOrder);
+  return sortSketches(filtered, sortOrder);
 }
