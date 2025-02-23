@@ -1,12 +1,20 @@
 <script lang="ts">
   import { fade, fly } from 'svelte/transition';
-  import { groupedSketches, loading, error, selectedCategory, searchQuery } from '../stores/sketch';
+  import {
+    groupedSketches,
+    loading,
+    error,
+    selectedCategory,
+    searchQuery,
+    selectedTimePeriod
+  } from '../stores/sketch';
   import { getEmoji, updateURL } from '../lib';
   import SketchItem from './SketchItem.svelte';
 
   function resetFilters(): void {
     $selectedCategory = null;
     $searchQuery = '';
+    $selectedTimePeriod = null;
     updateURL(null);
   }
 </script>
@@ -71,7 +79,7 @@
             No sketches have been added yet
           {/if}
         </p>
-        {#if $selectedCategory || $searchQuery.trim() !== ''}
+        {#if $selectedCategory || $searchQuery.trim() !== '' || selectedTimePeriod}
           <button
             on:click={resetFilters}
             class="rounded-lg bg-neutral-200 px-4 py-2 text-sm font-medium transition-colors hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700"
@@ -97,7 +105,7 @@
                   out:fade
                   class="relative rounded-lg border border-neutral-200 p-4 transition-colors hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800/50"
                 >
-                  <SketchItem sketch={sketch} />
+                  <SketchItem {sketch} />
                 </li>
               {/each}
             </ul>
