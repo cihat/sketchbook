@@ -74,31 +74,6 @@ export function sortProjects(
   });
 }
 
-// export function filterProjects(
-//   allProjects: Sketch[],
-//   selectedCategory: string | null,
-//   searchQuery: string,
-//   sortOrder: 'oldest' | 'newest'
-// ): Sketch[] {
-//   let filtered = [...allProjects];
-
-//   if (selectedCategory) {
-//     filtered = filtered.filter((project) => project.category === selectedCategory);
-//   }
-
-//   if (searchQuery.trim() !== '') {
-//     const query = searchQuery.toLowerCase();
-//     filtered = filtered.filter(
-//       (project) =>
-//         project.name.toLowerCase().includes(query) ||
-//         project.notes.toLowerCase().includes(query) ||
-//         project.category.toLowerCase().includes(query)
-//     );
-//   }
-
-//   return sortProjects(filtered, sortOrder);
-// }
-
 export type TimePeriod =
   | 'this-week'
   | 'last-week'
@@ -108,7 +83,6 @@ export type TimePeriod =
   | 'last-3-months'
   | 'last-6-months';
 
-// Tarihleri karşılaştırmak için helper fonksiyon
 function isWithinPeriod(date: Date, period: TimePeriod): boolean {
   const now = new Date();
   const startOfWeek = new Date(now);
@@ -171,7 +145,6 @@ export function filterProjectsByTimePeriod(
   });
 }
 
-// Mevcut filterProjects fonksiyonunu güncelle
 export function filterProjects(
   allProjects: Sketch[],
   selectedCategory: string | null,
@@ -181,17 +154,14 @@ export function filterProjects(
 ): Sketch[] {
   let filtered = [...allProjects];
 
-  // Zaman periyoduna göre filtrele
   if (timePeriod) {
     filtered = filterProjectsByTimePeriod(filtered, timePeriod);
   }
 
-  // Kategoriye göre filtrele
   if (selectedCategory) {
     filtered = filtered.filter((project) => project.category === selectedCategory);
   }
 
-  // Arama sorgusuna göre filtrele
   if (searchQuery.trim() !== '') {
     const query = searchQuery.toLowerCase();
     filtered = filtered.filter(

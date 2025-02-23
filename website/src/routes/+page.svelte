@@ -13,7 +13,6 @@
   } from '../lib';
   import { useProjects, useDarkMode, useURLParams } from '../lib/hooks';
 
-  let sketches: Sketch[] = [];
   let allProjects: Sketch[] = [];
   let loading: boolean = true;
   let error: string | null = null;
@@ -32,16 +31,6 @@
   const { loadProjects } = useProjects();
   const { setupDarkMode } = useDarkMode();
   const { getURLCategory } = useURLParams();
-
-  const timePeriods: { value: TimePeriod; label: string }[] = [
-    { value: 'this-week', label: 'This Week' },
-    { value: 'last-week', label: 'Last Week' },
-    { value: 'next-week', label: 'Next Week' },
-    { value: 'last-month', label: 'Last Month' },
-    { value: 'last-2-months', label: 'Last 2 Months' },
-    { value: 'last-3-months', label: 'Last 3 Months' },
-    { value: 'last-6-months', label: 'Last 6 Months' }
-  ];
 
   function applyFilters(): void {
     const filtered = filterProjects(
