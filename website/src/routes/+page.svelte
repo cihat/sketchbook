@@ -19,7 +19,6 @@
       if (!response.ok) {
         throw new Error('Failed to load sketches data');
       }
-
       const sketches = await response.json();
       allSketches.set(sketches);
 
@@ -44,10 +43,9 @@
   <meta name="description" content="Tracking my sketches and experiments" />
 </svelte:head>
 
-<div class="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50">
+<div class="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
   <div class="container mx-auto max-w-6xl p-6">
     <Header />
-
     <div class="flex flex-col gap-6 md:flex-row">
       <div class="w-full md:sticky md:top-6 md:w-1/3 md:self-start">
         <div class="mb-6">
@@ -57,12 +55,10 @@
         <TimeFilter />
         <CategoryFilter />
       </div>
-
       <div class="w-full md:w-2/3">
         <SketchList />
       </div>
     </div>
-
     <Footer />
   </div>
 </div>
@@ -82,10 +78,12 @@
       system-ui,
       sans-serif;
     background-color: #fafafa;
+    color: #171717; /* Added explicit text color for light theme */
   }
 
   :global(html.dark) {
-    background-color: #0a0a0a;
+    background-color: #171717;
+    color: #f5f5f5; /* Added explicit text color for dark theme */
   }
 
   :global(body) {
@@ -94,18 +92,34 @@
     overflow-x: hidden;
     position: relative;
     background-color: inherit;
+    color: inherit; /* Inherit text color from html */
   }
 
   :global(#app) {
     background-color: inherit;
+    color: inherit; /* Inherit text color from body */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
+  /* Fix for iOS Safari viewport height issues */
   @supports (-webkit-touch-callout: none) {
     :global(body) {
       min-height: -webkit-fill-available;
+    }
+  }
+
+  /* Ensure elements inside the app also inherit text color unless specified */
+  :global(#app *:not([class*='color'])) {
+    color: inherit;
+  }
+
+  /* Media query specifically for iPhone 7 and similar devices */
+  @media screen and (max-width: 375px) {
+    :global(html.dark) {
+      background-color: #171717;
+      color: #f5f5f5; /* Reinforced for iPhone specific */
     }
   }
 </style>
