@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { repoUrl } from '$lib/constants';
   import { type Sketch, getEmoji } from '../lib';
 
   export let sketch: Sketch;
@@ -15,9 +16,9 @@
 
 <div class="flex items-start pr-28">
   <div class="flex-1">
-    {#if sketch.link && !sketch.completed}
+    {#if sketch.link}
       <a
-        href={sketch.link}
+        href={repoUrl + sketch.link}
         target="_blank"
         rel="noopener noreferrer"
         class="font-medium text-neutral-900 hover:underline dark:text-neutral-50"
