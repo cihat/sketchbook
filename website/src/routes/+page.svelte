@@ -9,7 +9,7 @@
   import SketchList from '../components/SketchList.svelte';
   import Footer from '../components/Footer.svelte';
   import { allSketches, loading, categories, error, selectedCategory } from '../stores/sketch';
-  import { darkMode } from '../stores/darkMode';
+  // import { darkMode } from '../stores/darkMode';
   import type { Sketch } from '$lib';
   import { urlParamsHelper } from '$lib/urlParams';
 
@@ -34,7 +34,7 @@
       loading.set(false);
     }
 
-    darkMode.setup();
+    // darkMode.setup();
   });
 </script>
 
@@ -52,8 +52,8 @@
           <SearchBar />
           <SortButton />
         </div>
-        <TimeFilter />
         <CategoryFilter />
+        <TimeFilter />
       </div>
       <div class="w-full md:w-2/3">
         <SketchList />
@@ -77,49 +77,5 @@
       Roboto,
       system-ui,
       sans-serif;
-    background-color: #fafafa;
-    color: #171717; /* Added explicit text color for light theme */
-  }
-
-  :global(html.dark) {
-    background-color: #171717;
-    color: #f5f5f5; /* Added explicit text color for dark theme */
-  }
-
-  :global(body) {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    overflow-x: hidden;
-    position: relative;
-    background-color: inherit;
-    color: inherit; /* Inherit text color from html */
-  }
-
-  :global(#app) {
-    background-color: inherit;
-    color: inherit; /* Inherit text color from body */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Fix for iOS Safari viewport height issues */
-  @supports (-webkit-touch-callout: none) {
-    :global(body) {
-      min-height: -webkit-fill-available;
-    }
-  }
-
-  /* Ensure elements inside the app also inherit text color unless specified */
-  :global(#app *:not([class*='color'])) {
-    color: inherit;
-  }
-
-  /* Media query specifically for iPhone 7 and similar devices */
-  @media screen and (max-width: 375px) {
-    :global(html.dark) {
-      background-color: #171717;
-      color: #f5f5f5; /* Reinforced for iPhone specific */
-    }
   }
 </style>
