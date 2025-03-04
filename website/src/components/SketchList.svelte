@@ -22,7 +22,7 @@
 <div
   class="rounded-xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-900"
 >
-  <div class="p-6">
+  <div class="p-2 md:p-4">
     <h2 class="mb-6 text-xl font-semibold text-neutral-900 dark:text-neutral-50">
       {#if $selectedCategory}
         {getEmoji($selectedCategory)} {$selectedCategory} Sketches

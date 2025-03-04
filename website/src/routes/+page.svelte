@@ -10,7 +10,6 @@
   // Import custom components that we'll rewrite
   import Header from '../components/Header.svelte';
   import SearchBar from '../components/SearchBar.svelte';
-  import SortButton from '../components/SortButton.svelte';
   import CategoryFilter from '../components/CategoryFilter.svelte';
   import TimeFilter from '../components/TimeFilter.svelte';
   import SketchList from '../components/SketchList.svelte';
@@ -47,7 +46,7 @@
 </svelte:head>
 
 <div class="bg-background text-foreground min-h-screen">
-  <div class="container mx-auto max-w-6xl p-6">
+  <div class="container mx-auto max-w-6xl p-2 md:p-4">
     <Header />
 
     <div class="grid gap-6 md:grid-cols-3">
@@ -82,7 +81,6 @@
     </div>
 
     <Separator.Root class="my-8" />
-
     <Footer />
   </div>
 </div>
