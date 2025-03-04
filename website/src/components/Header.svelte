@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<header class="mb-8">
+<header class="mb-4 md:mb-8">
   <h1 class="mb-2 text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">
     Sketchbook
   </h1>
