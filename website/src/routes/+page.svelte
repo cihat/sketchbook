@@ -81,5 +81,31 @@
       Roboto,
       system-ui,
       sans-serif;
+    background-color: #fafafa;
+  }
+
+  :global(html.dark) {
+    background-color: #0a0a0a;
+  }
+
+  :global(body) {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overflow-x: hidden;
+    position: relative;
+    background-color: inherit;
+  }
+
+  :global(#app) {
+    background-color: inherit;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    :global(body) {
+      min-height: -webkit-fill-available;
+    }
   }
 </style>
