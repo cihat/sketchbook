@@ -2,8 +2,8 @@
   import { Button } from "@/lib/components/ui/button";
 </script>
 
-<header class="mb-4 md:mb-8 flex items-end justify-between">
-	<div>
+<header class="mb-4 md:mb-8 flex items-end justify-between flex-col sm:flex-row items-stretch">
+	<div class="mb-4 sm:mb-0">
 		<h1 class="mb-2 text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">
 			Sketchbook
 		</h1>
@@ -12,6 +12,6 @@
 		</p>
 	</div>
   <Button>
-    <a href="/ideas/">Ideas</a>
+    <a href="/ideas/">Sketchbook Ideas</a>
   </Button>
 </header>

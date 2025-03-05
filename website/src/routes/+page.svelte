@@ -46,10 +46,9 @@
 </svelte:head>
 
 <div class="bg-background text-foreground min-h-screen">
-  <div class="container mx-auto max-w-6xl p-2 md:p-4">
+  <div class="container mx-auto max-w-6xl px-2 py-4 md:p-6">
     <Header />
     <div class="grid gap-6 md:grid-cols-3">
-      <!-- Sidebar with filters -->
       <div class="space-y-6 md:sticky md:top-6 md:self-start">
         <Card.Root>
           <Card.Content>

@@ -2,10 +2,9 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: "media", // Changed to media for system preference detection
   content: ["./src/**/*.{html,js,svelte,ts}"],
   plugins: [require('@tailwindcss/typography')],
-  safelist: ["dark"],
   theme: {
     container: {
       center: true,
