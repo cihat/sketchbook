@@ -27,7 +27,6 @@
 
       const markdown = await response.text();
 
-      // Markdown'ı HTML'e dönüştürme
       content = marked(markdown);
       loading = false;
     } catch (e) {

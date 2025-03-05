@@ -1,7 +1,6 @@
 <script lang="ts">
   import { repoUrl } from '$lib/constants';
   import { type Sketch, getEmoji } from '../lib';
-
   export let sketch: Sketch;
 </script>
 
@@ -13,20 +12,25 @@
     {sketch.category}
   </span>
 </div>
-
 <div class="flex items-start pr-2 sm:pr-28">
   <div class="flex-1">
     {#if sketch.link}
       <a
-        href={repoUrl + sketch.link}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={`/sketches/${sketch.id}`}
         class="font-medium text-neutral-900 hover:underline dark:text-neutral-50"
       >
         {sketch.name}
+      </a>
+      <a
+        href={repoUrl + sketch.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="ml-2 inline-flex items-center text-neutral-500"
+        aria-label="External link to sketch repository"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="mb-2 ml-1 inline-block h-5 w-5 opacity-70"
+          class="h-4 w-4 opacity-70"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
