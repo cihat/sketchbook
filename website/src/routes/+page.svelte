@@ -45,38 +45,33 @@
   <meta name="description" content="Tracking my sketches and experiments" />
 </svelte:head>
 
-<div class="bg-background text-foreground min-h-screen">
-  <div class="container mx-auto max-w-6xl px-2 py-4 md:p-6">
-    <Header />
-    <div class="grid gap-6 md:grid-cols-3">
-      <div class="space-y-6 md:sticky md:top-6 md:self-start">
-        <Card.Root>
-          <Card.Content>
-            <SearchBar />
-            <CategoryFilter />
-            <TimeFilter />
-          </Card.Content>
-        </Card.Root>
+<div class="grid gap-6 md:grid-cols-3">
+  <div class="space-y-6 md:sticky md:top-6 md:self-start">
+    <Card.Root>
+      <Card.Content>
+        <SearchBar />
+        <CategoryFilter />
+        <TimeFilter />
+      </Card.Content>
+    </Card.Root>
+  </div>
+  <div class="md:col-span-2">
+    {#if $loading}
+      <div class="space-y-4">
+        <Skeleton.Root class="h-12 w-full" />
+        <Skeleton.Root class="h-64 w-full" />
+        <Skeleton.Root class="h-64 w-full" />
       </div>
-      <div class="md:col-span-2">
-        {#if $loading}
-          <div class="space-y-4">
-            <Skeleton.Root class="h-12 w-full" />
-            <Skeleton.Root class="h-64 w-full" />
-            <Skeleton.Root class="h-64 w-full" />
-          </div>
-        {:else if $error}
-          <Alert.Root variant="destructive">
-            <Alert.Title>Error loading sketches</Alert.Title>
-            <Alert.Description>{$error}</Alert.Description>
-          </Alert.Root>
-        {:else}
-          <SketchList />
-        {/if}
-      </div>
-    </div>
-
-    <Separator.Root class="my-8" />
-    <Footer />
+    {:else if $error}
+      <Alert.Root variant="destructive">
+        <Alert.Title>Error loading sketches</Alert.Title>
+        <Alert.Description>{$error}</Alert.Description>
+      </Alert.Root>
+    {:else}
+      <SketchList />
+    {/if}
   </div>
 </div>
+
+<Separator.Root class="my-8" />
+<Footer />

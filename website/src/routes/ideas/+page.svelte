@@ -1,17 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { marked } from 'marked';
-  import { Button } from '$lib/components/ui/button';
-  import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
-  } from '$lib/components/ui/card';
-  import { Skeleton } from '$lib/components/ui/skeleton';
-  import * as Alert from '$lib/components/ui/alert';
+  import SketchReadmeViewer from '@/components/SketchReadmeViewer.svelte';
 
   let content = '';
   let loading = true;
@@ -36,44 +26,17 @@
   });
 </script>
 
-<div class="container mx-auto px-4 py-10">
-  <Card class="mx-auto w-full max-w-4xl">
-    <CardHeader>
-      <div class="flex items-center justify-between">
-        <CardTitle>Ideas</CardTitle>
-      </div>
-      <CardDescription class="flex items-center justify-between space-x-2">
-        <p>README.md Content</p>
-        <div class="text-muted-foreground text-sm">Last updated: 03/05/2025</div>
-        <Button variant="outline" size="sm" on:click={() => window.history.back()}>Back</Button>
-      </CardDescription>
-    </CardHeader>
-
-    <CardContent>
-      {#if loading}
-        <div class="space-y-2">
-          <Skeleton class="h-6 w-2/3" />
-          <Skeleton class="h-4 w-full" />
-          <Skeleton class="h-4 w-full" />
-          <Skeleton class="h-4 w-3/4" />
-          <Skeleton class="mt-4 h-6 w-1/2" />
-          <Skeleton class="h-4 w-full" />
-          <Skeleton class="h-4 w-full" />
-        </div>
-      {:else if error}
-        <Alert.Root variant="destructive">
-          <Alert.Icon />
-          <Alert.Title>Error</Alert.Title>
-          <Alert.Description>{error}</Alert.Description>
-        </Alert.Root>
-      {:else}
-        <div class="prose dark:prose-invert max-w-none">
-          {@html content}
-        </div>
-      {/if}
-    </CardContent>
-  </Card>
-</div>
+<SketchReadmeViewer
+  title="Ideas"
+  subtitle="README.md Content"
+  lastUpdated="03/05/2025"
+  {loading}
+  {error}
+>
+  <div class="prose dark:prose-invert max-w-none">
+    {@html content}
+  </div>
+</SketchReadmeViewer>
 
 <style>
   /* Shadcn ile prose (tipografi) stillerini uyumlu hale getirme */
