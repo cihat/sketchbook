@@ -48,7 +48,6 @@
 <div class="bg-background text-foreground min-h-screen">
   <div class="container mx-auto max-w-6xl p-2 md:p-4">
     <Header />
-
     <div class="grid gap-6 md:grid-cols-3">
       <!-- Sidebar with filters -->
       <div class="space-y-6 md:sticky md:top-6 md:self-start">
@@ -60,8 +59,6 @@
           </Card.Content>
         </Card.Root>
       </div>
-
-      <!-- Main content area -->
       <div class="md:col-span-2">
         {#if $loading}
           <div class="space-y-4">
