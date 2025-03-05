@@ -188,6 +188,8 @@
 		font-weight: 600;
 		line-height: 1.2;
 		letter-spacing: -0.025em;
+    padding-bottom: .3em;
+    border-bottom: 1px solid hsl(var(--border));
 	}
 
 	:global(.prose h2) {
@@ -197,6 +199,8 @@
 		font-weight: 600;
 		line-height: 1.3;
 		letter-spacing: -0.025em;
+    padding-bottom: .3em;
+    border-bottom: 1px solid hsl(var(--border));
 	}
 
 	:global(.prose h3) {
