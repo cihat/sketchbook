@@ -20,7 +20,6 @@
   export let loading = false;
   export let error = null;
   export let backButton = true;
-  export let actions = null; // slot for additional header actions
 
   // Function to handle back button click
   function goBack() {
@@ -28,10 +27,10 @@
   }
 </script>
 
-<div class="container mx-auto px-4 py-8">
+<div class="">
   {#if backButton}
     <nav class="mb-6">
-      <Button variant="ghost" class="flex h-auto items-center p-0" on:click={goBack}>
+      <!-- <Button variant="ghost" class="flex h-auto items-center p-0" on:click={goBack}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="mr-1 h-5 w-5"
@@ -45,11 +44,11 @@
           />
         </svg>
         Back
-      </Button>
+      </Button> -->
     </nav>
   {/if}
 
-  <Card class="mx-auto w-full max-w-4xl">
+  <Card class="mx-auto w-full">
     <CardHeader>
       <div class="flex items-center justify-between">
         <CardTitle>{title}</CardTitle>

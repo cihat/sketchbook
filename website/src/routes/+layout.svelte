@@ -10,7 +10,7 @@
 </script>
 
 <div class="bg-background text-foreground min-h-screen">
-  <div class="container mx-auto max-w-6xl px-2 py-4 md:p-6">
+  <div class="container mx-auto max-w-4xl px-2 py-4 md:p-6">
     <Header />
     {@render children()}
   </div>

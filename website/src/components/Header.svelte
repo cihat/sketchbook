@@ -3,7 +3,7 @@
   import { House, SquarePen } from 'lucide-svelte';
 </script>
 
-<header class="mb-4 flex flex-col justify-between sm:flex-row md:mb-8">
+<header class="mb-2 flex flex-col justify-between sm:flex-row md:mb-4">
   <div class="mb-4 sm:mb-0">
     <h1 class="mb-2 text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">
       Sketchbook
