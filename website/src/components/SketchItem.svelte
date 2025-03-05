@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { repoUrl } from '$lib/constants';
+  import { repoUrl } from '$lib/constants';
   import { type Sketch, getEmoji } from '../lib';
 
   export let sketch: Sketch;
@@ -14,7 +14,7 @@
   </span>
 </div>
 
-<div class="flex items-start pr-28">
+<div class="flex items-start pr-2 sm:pr-28">
   <div class="flex-1">
     {#if sketch.link}
       <a
@@ -26,7 +26,7 @@
         {sketch.name}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="ml-1 inline-block h-4 w-4 opacity-70"
+          class="mb-2 ml-1 inline-block h-5 w-5 opacity-70"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
