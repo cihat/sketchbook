@@ -9,6 +9,7 @@ export default defineConfig({
       strategies: 'generateSW',
       registerType: 'autoUpdate',
       workbox: {
+        globPatterns: ['**/*.{js,css,html,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}'],
         cleanupOutdatedCaches: true,
         globIgnores: [
           "server/**",

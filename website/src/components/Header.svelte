@@ -6,7 +6,7 @@
 <header class="mb-2 flex flex-col justify-between sm:flex-row md:mb-4">
   <div class="mb-4 sm:mb-0">
     <h1 class="mb-2 text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">
-      Sketchbook
+      <a href="/" class="cursor-pointer">Sketchbook</a>
     </h1>
     <p class="text-neutral-500 dark:text-neutral-400">
       Sketches, approaches, and ideas I've tried and learned from
