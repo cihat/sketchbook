@@ -1,12 +1,12 @@
 <script lang="ts">
   import '../app.css';
   import { dev } from '$app/environment';
-  import { inject } from '@vercel/analytics';
+  import { injectAnalytics } from '@vercel/analytics/sveltekit';
   import Header from '@/components/Header.svelte';
 
   let { children } = $props();
 
-  inject({ mode: dev ? 'development' : 'production' });
+  injectAnalytics({ mode: dev ? 'development' : 'production' });
 </script>
 
 <div class="bg-background text-foreground min-h-screen">
