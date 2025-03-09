@@ -54,7 +54,7 @@ This project will provide you with a comprehensive understanding of algorithms a
 ---
 
 
-***👉🏼 Algorithms and Data Structures**
+**👉🏼 Algorithms and Data Structures**
    - Fundamental data structures
    - Algorithm complexity and Big O notation
    - Sorting and searching algorithms

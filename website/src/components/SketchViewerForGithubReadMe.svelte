@@ -165,12 +165,6 @@
     margin-bottom: 20px;
     /* border-bottom: 1px solid #eee; */
   }
-  
-  .header a:hover {
-    background: #3498db;
-    color: white;
-  }
-  
   .markdown-content :global(h1),
   .markdown-content :global(h2),
   .markdown-content :global(h3) {
