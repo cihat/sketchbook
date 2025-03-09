@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { repoUrl } from '$lib/constants';
   import type { Sketch } from '@/lib';
-  import SketchViewer from '@/components/SketchViewer.svelte';
+  import SketchViewerForGithubReadMe from '@/components/SketchViewerForGithubReadMe.svelte';
   import * as Button from '$lib/components/ui/button';
   import { Badge } from '$lib/components/ui/badge';
   import SketchReadmeViewer from '@/components/SketchReadmeViewer.svelte';
@@ -101,7 +101,7 @@
         <p class="text-muted-foreground mb-6">{sketch.notes}</p>
       {/if}
 
-      <SketchViewer {sketch} />
+      <SketchViewerForGithubReadMe {sketch} />
     </div>
   {/if}
 </SketchReadmeViewer>
