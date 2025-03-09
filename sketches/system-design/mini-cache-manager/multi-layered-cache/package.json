@@ -1,0 +1,19 @@
+{
+  "name": "multi-layered-cache",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node --watch ./test/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.8.2",
+    "express": "^4.21.2",
+    "ioredis": "^5.6.0"
+  }
+}
