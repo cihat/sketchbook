@@ -5,7 +5,16 @@
     "notes": "A simple cache manager with multiple levels of caching. Develop a basic web application that implements different levels of caching mechanisms (memory cache, file cache, and distributed cache) and allows you to compare performance results. This project will consist of a simple REST API that retrieves certain data but applies different caching strategies.",
     "link": "/system-design/mini-cache-manager",
     "category": "System Design",
-    "completed": false,
+    "completed": true,
     "date": "2025-05-05"
+  },
+  {
+    "id": 2,
+    "name": "AlgoTracker: Visual Algorithm and Data Structure Playground",
+    "notes": "Develop an interactive application that implements, visualizes, and compares the performance of various algorithms and data structures. The project will include implementations of fundamental data structures and algorithms, with visualizations of their operations and performance metrics. This hands-on project will deepen your understanding of algorithmic complexity and data structure selection.",
+    "link": "/algorithms/visual-algorithm-data-structure-playground",
+    "category": "Algorithms|Data Structures",
+    "completed": false,
+    "date": "2025-05-10"
   }
 ]
