@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from '@/lib/components/ui/button';
-  import { House, SquarePen } from 'lucide-svelte';
+  import { Backpack, History, House, SquarePen } from 'lucide-svelte';
 </script>
 
 <header class="mb-2 flex flex-col justify-between sm:flex-row md:mb-4">
@@ -20,7 +20,7 @@
     </Button>
     <Button size="sm" variant="ghost">
       <a href="/ideas/">
-        <SquarePen />
+        <History />
       </a>
     </Button>
   </div>
