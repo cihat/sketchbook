@@ -27,7 +27,7 @@
   }
 </script>
 
-<div class="">
+<div class="prose dark:prose-invert max-w-none">
   {#if backButton}
     <nav class="mb-6">
       <!-- <Button variant="ghost" class="flex h-auto items-center p-0" on:click={goBack}>
@@ -85,7 +85,3 @@
     </CardContent>
   </Card>
 </div>
-
-<style>
-  /* Add any shared styling here */
-</style>

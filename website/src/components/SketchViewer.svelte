@@ -116,20 +116,11 @@
       {error}
     </div>
   {:else}
-    <div class="markdown-content">
-      <div class="header">
-        <h1>{sketch.name}</h1>
-        <a href={repoUrl + sketch.link} target="_blank" rel="noopener noreferrer">
-          View on GitHub
-        </a>
-      </div>
-
-      <!-- We'll use Svelte's {@html} to render the README with basic sanitization -->
-      <!-- Note: In a production app, you should use a proper markdown parser like marked.js -->
-      <div class="markdown-body">
-        {@html convertMarkdownToHtml(readme)}
-      </div>
+    <div class="header">
+      <h1>{sketch.name}</h1>
+      <a href={repoUrl + sketch.link} target="_blank" rel="noopener noreferrer"> View on GitHub </a>
     </div>
+
+    {@html convertMarkdownToHtml(readme)}
   {/if}
 </div>
-

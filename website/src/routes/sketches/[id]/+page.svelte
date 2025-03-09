@@ -6,7 +6,7 @@
   import * as Button from '$lib/components/ui/button';
   import { Badge } from '$lib/components/ui/badge';
   import SketchReadmeViewer from '@/components/SketchReadmeViewer.svelte';
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   let sketch: Sketch | null = null;
   let loading = true;
